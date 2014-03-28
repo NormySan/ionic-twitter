@@ -1,1 +1,7 @@
-<h1>Hello test!</h1>
+<h3>Books</h3>
+<form ng-submit="search()">
+	<input type="text" ng-model="searchTerm">
+</form>
+<ul>
+	<li ng-repeat="book in books">{{ book.volumeInfo.title }}</li>
+</ul>
