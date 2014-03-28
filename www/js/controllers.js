@@ -1,5 +1,11 @@
 angular.module('bookApp.controllers', [])
 
 .controller('BaseController', function($scope, BooksService) {
-	$scope.books =  BooksService.search('Computers');
+	$scope.books = [];
+
+	$scope.search = function(string) {
+		BooksService.search(string).then(function(response) {
+			$scope.books = response.items;
+		});
+	}
 });

@@ -1,16 +1,19 @@
 angular.module('bookApp.services', [])
 
-.factory('BooksService', function ($http) {
+.factory('BooksService', function ($q, $http) {
 	return {
 		search: function(query) {
-			return $http.get('https://www.googleapis.com/books/v1/volumes', {
+			var deffered = $q.defer();
+			
+			$http.get('https://www.googleapis.com/books/v1/volumes', {
 				params: { q: query }
-			}).then(function(data) {
+			}).success(function(data, status) {
+				deffered.resolve(data);
+			}).error(function(data, status) {
+				deffered.reject(data);
+			});
 
-				console.log(data.items);
-
-				return data.items;
-			})
+			return deffered.promise;
 		}
 	}
 });
