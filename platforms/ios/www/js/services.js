@@ -1,26 +1,40 @@
-angular.module('starter.services', [])
+angular.module('twitterApp.services', ['ui.router', 'ngResource'])
 
-/**
- * A simple example service that returns some data.
- */
-.factory('Friends', function() {
-  // Might use a resource here that returns a JSON array
+.factory('TwitterService', function ($resource, $http) {
+    var consumerKey = encodeURIComponent('ZKMuDGX4pJ6JNElQinrjAw')
+    var consumerSecret = encodeURIComponent('OFdfJZZjVFVQXg3cuDa1MHzw4yS2wktIo4zMPAXXd8U')
+    var credentials = btoa(consumerKey + ':' + consumerSecret)
 
-  // Some fake testing data
-  var friends = [
-    { id: 0, name: 'Scruff McGruff' },
-    { id: 1, name: 'G.I. Joe' },
-    { id: 2, name: 'Miss Frizzle' },
-    { id: 3, name: 'Ash Ketchum' }
-  ];
+    // Twitters OAuth service endpoint
+    var twitterOauthEndpoint = $http.post('https://api.twitter.com/oauth2/token', {
+    	method: 'POST',
+    	data: 'grant_type=client_credentials',
+      	headers: {
+        	'Authorization': 'Basic ' + credentials,
+        	'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      	}
+    })
 
-  return {
-    all: function() {
-      return friends;
-    },
-    get: function(friendId) {
-      // Simple index lookup
-      return friends[friendId];
-    }
-  }
+    twitterOauthEndpoint.success(function (response) {
+        // a successful response will return
+        // the "bearer" token which is registered
+        // to the $httpProvider
+        //$httpProvider.defaults.headers.common['Authorization'] = "Bearer " + response.access_token
+        console.log(response);
+    }).error(function (response) {
+      // error handling to some meaningful extent
+    })
+
+    /*
+    var response = $resource('https://api.twitter.com/1.1/search/:action',
+        {
+          action: 'tweets.json',
+          count: 10,
+        },
+        {
+          paginate: {method: 'GET'}
+        })
+
+    return response;
+    */
 });

@@ -1,15 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('twitterApp.controllers', [])
 
-.controller('DashCtrl', function($scope) {
-})
+.controller('BaseController', function($http) {
 
-.controller('FriendsCtrl', function($scope, Friends) {
-  $scope.friends = Friends.all();
-})
+	$http.jsonp('https://api.twitter.com/1.1/statuses/user_timeline.json', {
+		params: {
+			count: '2',
+			screen_name: 'NormySanDeluxe'
+		}
+	}).success(function(response) {
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
-})
+	});
 
-.controller('AccountCtrl', function($scope) {
 });

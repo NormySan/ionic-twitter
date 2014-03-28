@@ -1,4 +1,4 @@
-angular.module('twitterApp', ['twitterApp.controllers', 'twitterApp.services'])
+angular.module('bookApp', ['ui.router', 'bookApp.controllers', 'bookApp.services'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -6,7 +6,7 @@ angular.module('twitterApp', ['twitterApp.controllers', 'twitterApp.services'])
 		.state('base', {
 			url: '/base',
 			controller: 'BaseController',
-			template: 'templates/test.html'
+			templateUrl: 'templates/books-list.html'
 		});
 
 	$urlRouterProvider.otherwise("/base");
