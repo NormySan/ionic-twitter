@@ -6,7 +6,10 @@ angular.module('bookApp.services', [])
 			return $http.get('https://www.googleapis.com/books/v1/volumes', {
 				params: { q: query }
 			}).then(function(data) {
-				return data;
+
+				console.log(data.items);
+
+				return data.items;
 			})
 		}
 	}
